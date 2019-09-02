@@ -17,7 +17,18 @@ kotlin {
             }
         }
     }
-    js()
+    js {
+        browser()
+        compilations.all {
+            tasks.withType(org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile) {
+                kotlinOptions {
+                    metaInfo = true
+                    sourceMap = true
+                    moduleKind = 'umd'
+                }
+            }
+        }
+    }
     jvm()
 
     sourceSets {
@@ -70,8 +81,8 @@ task packForXcode {
 tasks.build.dependsOn packForXcode
 
 // js task
-[compileKotlinJs, compileTestKotlinJs]*.configure {
-    kotlinOptions {
+[compileKotlinJs, compileTestKotlinJs].each { config ->
+    config.kotlinOptions {
         moduleKind = "umd"
     }
 }

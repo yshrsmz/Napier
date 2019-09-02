@@ -10,7 +10,10 @@ kotlin {
     iosX64('ios')
     iosArm32('iosArm32')
     iosArm64('iosArm64')
-    js()
+    js {
+        browser()
+        nodejs()
+    }
     jvm()
 
     sourceSets {
